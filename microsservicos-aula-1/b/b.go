@@ -26,8 +26,10 @@ func home(w http.ResponseWriter, r *http.Request) {
 
 	result := Result{Status: "declined"}
 
-	if ccNumber == "1" {
-		result.Status = "approved"
+	resultCcNumber := makeHttpCall("http://localhost:9093", ccNumber)
+
+	if resultCcNumber.Status == "invalid" {
+		result.Status = "invalid ccNumber"
 	}
 
 	if resultCoupon.Status == "invalid" {
